@@ -9,26 +9,30 @@ import { InMemoryDataService } from './in-memory-data.service';
 import { AppRoutingModule } from './app-routing.module';
 
 import { AppComponent } from './app.component';
-import { HeroesComponent } from './heroes/heroes.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
+
+import { CrisisListComponent } from './crisis/crisis-list/crisis-list.component';
+
+import { HeroListComponent } from './heroes/hero-list/hero-list.component';
+import { HeroSearchComponent } from './heroes/hero-search/hero-search.component';
 import { HeroDetailComponent } from './heroes/hero-detail/hero-detail.component';
+
 import { MessagesComponent } from './messages/messages.component';
 import { MessageComponent } from './messages/message/message.component';
-import { DashboardComponent } from './dashboard/dashboard.component';
-import { HeroSearchComponent } from './heroes/hero-search/hero-search.component';
+
 import { PageNotFoundComponent } from './dashboard/page-not-found/page-not-found.component';
-import { CrisisListComponent } from './heroes/crisis-list/crisis-list.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    HeroesComponent,
+    DashboardComponent,
+    CrisisListComponent,
+    HeroListComponent,
+    HeroSearchComponent,
     HeroDetailComponent,
     MessagesComponent,
     MessageComponent,
-    DashboardComponent,
-    HeroSearchComponent,
     PageNotFoundComponent,
-    CrisisListComponent
   ],
   imports: [
     FormsModule,
