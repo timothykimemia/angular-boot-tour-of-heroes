@@ -13,9 +13,8 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 
 import { CrisisListComponent } from './crisis/crisis-list/crisis-list.component';
 
-import { HeroListComponent } from './heroes/hero-list/hero-list.component';
+import { HeroModule } from './heroes/hero.module';
 import { HeroSearchComponent } from './heroes/hero-search/hero-search.component';
-import { HeroDetailComponent } from './heroes/hero-detail/hero-detail.component';
 
 import { MessagesComponent } from './messages/messages.component';
 import { MessageComponent } from './messages/message/message.component';
@@ -27,9 +26,7 @@ import { PageNotFoundComponent } from './dashboard/page-not-found/page-not-found
     AppComponent,
     DashboardComponent,
     CrisisListComponent,
-    HeroListComponent,
     HeroSearchComponent,
-    HeroDetailComponent,
     MessagesComponent,
     MessageComponent,
     PageNotFoundComponent,
@@ -37,7 +34,6 @@ import { PageNotFoundComponent } from './dashboard/page-not-found/page-not-found
   imports: [
     FormsModule,
     BrowserModule,
-    AppRoutingModule,
     HttpClientModule,
     HttpClientInMemoryWebApiModule,
 
@@ -46,7 +42,10 @@ import { PageNotFoundComponent } from './dashboard/page-not-found/page-not-found
     // Remove it when a real server is ready to receive requests.
     HttpClientInMemoryWebApiModule.forRoot(
       InMemoryDataService, { dataEncapsulation: false }
-    )
+    ),
+
+    HeroModule,
+    AppRoutingModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

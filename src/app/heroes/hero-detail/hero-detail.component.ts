@@ -1,6 +1,9 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router, ParamMap } from '@angular/router';
 import { Location } from '@angular/common';
+
+import { Observable } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
 
 import { Hero } from '../hero';
 import { HeroService } from '../hero.service';
@@ -14,6 +17,7 @@ export class HeroDetailComponent implements OnInit {
   hero: Hero;
 
   constructor(
+    private router: Router,
     private location: Location,
     private route: ActivatedRoute,
     private heroService: HeroService,
@@ -24,7 +28,12 @@ export class HeroDetailComponent implements OnInit {
   }
 
   getHero(): void {
-    const id = +this.route.snapshot.paramMap.get('id');
+    /*this.hero$ = this.route.paramMap.pipe(    // <-- switchMap (observable alternative | using async)
+      switchMap((params: ParamMap) =>
+        this.heroService.getHero(params.get('id')))
+    );*/
+
+    const id = +this.route.snapshot.paramMap.get('id');     // <-- snapshot (no-observable alternative)
     this.heroService.getHero(id).subscribe(hero => this.hero = hero);
   }
 
@@ -34,6 +43,14 @@ export class HeroDetailComponent implements OnInit {
 
   goBack(): void {
     this.location.back();
+  }
+
+  gotoHeroes(hero: Hero) {
+    const heroId = hero ? hero.id : null;
+    // Pass along the hero id if available
+    // so that the HeroList component can select that hero.
+    // Include a junk 'foo' property for fun.
+    this.router.navigate(['/hero', { id: heroId, foo: 'foo' }]);
   }
 
 }
