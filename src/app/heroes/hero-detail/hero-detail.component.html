@@ -1,4 +1,4 @@
-<div *ngIf="hero">
+<div *ngIf="hero$ | async as hero">
   <div><span>id: </span>{{ hero.id }}</div>
   <div>
     <label>name:
@@ -8,5 +8,6 @@
 
   <button (click)="save()">save</button>
   <br>
-  <button (click)="goBack()">go back</button>
+  <button (click)="goBack()">go back</button> |
+  <button (click)="gotoHeroes(hero)">back to Heroes</button> |
 </div>
