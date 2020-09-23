@@ -2,17 +2,16 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 import { DashboardComponent } from './dashboard/dashboard.component';
-import { CrisisListComponent } from './crisis/crisis-list/crisis-list.component';
 
 import { PageNotFoundComponent } from './dashboard/page-not-found/page-not-found.component';
+import {CrisisMessageComponent} from './crisis/crisis-message/crisis-message.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
-
   { path: 'dashboard', component: DashboardComponent },
-  { path: 'crisis', component: CrisisListComponent },
+  { path: 'compose', component: CrisisMessageComponent, outlet: 'popup' },
 
-  // Always to be placed at last position
+  // Always placed last position on any route collection | including in AppModule
+  { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
   { path: '**', component: PageNotFoundComponent },
 ];
 

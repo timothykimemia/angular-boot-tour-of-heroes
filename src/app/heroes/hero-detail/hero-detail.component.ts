@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, ParamMap } from '@angular/router';
 import { Location } from '@angular/common';
 
@@ -46,14 +46,14 @@ export class HeroDetailComponent implements OnInit {
     this.location.back();
   }
 
-  gotoHeroes(hero: Hero): void {
+  goToHeroes(hero: Hero): void {
     // this.router.navigate(['/hero']);   // <-- simply just navigate back to /hero
 
     const heroId = hero ? hero.id : null;
     // Pass along the hero id if available
     // so that the HeroList component can select that hero.
     // Include a junk 'foo' property for fun.
-    this.router.navigate(['/hero', { id: heroId}]);    // <-- alternatively if you want to return back with ID of hero attached
+    this.router.navigate(['/hero', { id: heroId}]).then();    // <-- alternatively if you want to return back with ID of hero attached
   }
 
 }

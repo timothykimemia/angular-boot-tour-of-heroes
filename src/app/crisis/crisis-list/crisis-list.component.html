@@ -1,1 +1,22 @@
-<p>crisis-list works!</p>
+<h2>Crises</h2>
+<div>
+  <label>Crisis name:
+    <input #crisisName />
+  </label> &nbsp;
+  <!-- (click) passes input value to add() and then clears the input -->
+  <button (click)="add(crisisName.value); crisisName.value=''">
+    add
+  </button>
+</div>
+
+<br>
+
+<ul class="crises">
+  <li *ngFor="let crisis of crises$ | async"
+      [class.selected]="crisis.id === selectedId">
+    <a [routerLink]="['/crisis', crisis.id]">
+      <span class="badge">{{ crisis.id }}</span> {{ crisis.name }}
+    </a>
+    <button class="delete" title="delete hero" (click)="delete(crisis)">x</button>
+  </li>
+</ul>

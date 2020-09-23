@@ -12,7 +12,7 @@ import { AppRoutingModule } from './app-routing.module';
 
 import { DashboardComponent } from './dashboard/dashboard.component';
 
-import { CrisisListComponent } from './crisis/crisis-list/crisis-list.component';
+import { CrisisModule } from './crisis/crisis.module';
 
 import { HeroModule } from './heroes/hero.module';
 import { HeroSearchComponent } from './heroes/hero-search/hero-search.component';
@@ -26,7 +26,6 @@ import { PageNotFoundComponent } from './dashboard/page-not-found/page-not-found
   declarations: [
     AppComponent,
     DashboardComponent,
-    CrisisListComponent,
     HeroSearchComponent,
     MessagesComponent,
     MessageComponent,
@@ -48,6 +47,7 @@ import { PageNotFoundComponent } from './dashboard/page-not-found/page-not-found
     ),
 
     HeroModule,
+    CrisisModule,
     AppRoutingModule,
   ],
   providers: [],

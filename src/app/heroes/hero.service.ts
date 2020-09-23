@@ -15,7 +15,7 @@ export class HeroService {
   private heroesUrl = 'api/heroes';  // URL to web api
 
   httpOptions = {
-    headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+    headers: new HttpHeaders({ 'Content-Type': 'application/json', Accept: 'application/json' })
   };
 
   constructor(
@@ -107,12 +107,11 @@ export class HeroService {
    */
   private handleError<T>(operation = 'operation', result?: T): any {
     return (error: any): Observable<T> => {
-
       // TODO: send the error to remote logging infrastructure
       console.error(error); // log to console instead
 
       // TODO: better job of transforming error for user consumption
-      this.log(`${operation} failed: ${error.body}`);
+      this.log(`${operation} failed: ${error.message}`);
 
       // Let the app keep running by returning an empty result.
       return of(result as T);
