@@ -12,6 +12,9 @@ import { AppRoutingModule } from './app-routing.module';
 
 import { DashboardComponent } from './dashboard/dashboard.component';
 
+import { AdminModule } from './admin/admin.module';
+import { AuthModule } from './auth/auth.module';
+
 import { CrisisModule } from './crisis/crisis.module';
 
 import { HeroModule } from './heroes/hero.module';
@@ -46,11 +49,13 @@ import { PageNotFoundComponent } from './dashboard/page-not-found/page-not-found
       InMemoryDataService, { dataEncapsulation: false }
     ),
 
+    AdminModule,
+    AuthModule,
     HeroModule,
     CrisisModule,
     AppRoutingModule,
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [ AppComponent ]
 })
 export class AppModule { }

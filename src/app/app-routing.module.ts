@@ -3,8 +3,9 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { DashboardComponent } from './dashboard/dashboard.component';
 
+import { CrisisMessageComponent } from './crisis/crisis-message/crisis-message.component';
+
 import { PageNotFoundComponent } from './dashboard/page-not-found/page-not-found.component';
-import {CrisisMessageComponent} from './crisis/crisis-message/crisis-message.component';
 
 const routes: Routes = [
   { path: 'dashboard', component: DashboardComponent },

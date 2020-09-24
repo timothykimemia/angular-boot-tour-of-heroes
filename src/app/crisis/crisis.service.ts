@@ -1,19 +1,21 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
-import { Observable, of } from 'rxjs';
+import { BehaviorSubject, Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 
 import { Crisis } from './crisis';
+import { CRISES } from './mock-crises';
 
 import { MessageService } from '../messages/message.service';
-import {Hero} from '../heroes/hero';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CrisisService {
   private crisisUrl = 'api/crises'; // URL to web api
+
+  private crises$: BehaviorSubject<Crisis[]> = new BehaviorSubject<Crisis[]>(CRISES);
 
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json', Accept: 'application/json' })
@@ -33,7 +35,7 @@ export class CrisisService {
   }
 
   /** GET crisis by id. Will return 404 if id not found */
-  getCrisis(id: number): Observable<Crisis> {
+  getCrisis(id: number | string): Observable<Crisis> {
     const url = `${this.crisisUrl}/${id}`;
     return this.http.get<Crisis>(url).pipe(
       tap(_ => this.log(`fetched crisis id=${id}`)),
@@ -74,16 +76,16 @@ export class CrisisService {
       // if not a search term, return empty crises array
       return of([]);
     }
-    return this.http.get<Hero[]>(`${this.crisisUrl}/?name=${term}`).pipe(
+    return this.http.get<Crisis[]>(`${this.crisisUrl}/?name=${term}`).pipe(
       tap(x => x.length ?
         this.log(`found heroes matching "${term}"`) :
         this.log(`no heroes matching "${term}"`)),
-      catchError(this.handleError<Hero[]>('searchHeroes', []))
+      catchError(this.handleError<Crisis[]>('searchHeroes', []))
     );
   }
 
   /** GET crisis by id. Return `undefined` when id not found */
-  getHeroNo404<Data>(id: number): Observable<Hero> {
+  getHeroNo404<Data>(id: number): Observable<Crisis> {
     const url = `${this.crisisUrl}/?id=${id}`;
     return this.http.get<Crisis[]>(url).pipe(
       map(crises => crises[0]), // returns a {0|1} element array
@@ -91,7 +93,7 @@ export class CrisisService {
         const outcome = h ? `fetched` : `did not find`;
         this.log(`${outcome} crisis id=${id}`);
       }),
-      catchError(this.handleError<Hero>(`getCrisis id=${id}`))
+      catchError(this.handleError<Crisis>(`getCrisis id=${id}`))
     );
   }
 
