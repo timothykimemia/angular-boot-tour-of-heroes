@@ -36,14 +36,14 @@ export class AuthGuard implements CanActivate, CanActivateChild, CanDeactivate<u
     state: RouterStateSnapshot
   ): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     const url: string = state.url;
-    console.log('AuthGuard#canActivate called', url);    // <-- Confirm that state is being called
+    // console.log('AuthGuard#canActivate called', url);    // <-- Confirm that state is being called
     return this.checkLogin(url);
   }
   canActivateChild(
     childRoute: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    console.log('AuthGuard#canActivateChild called', childRoute, state);    // <-- Confirm that state is being called
+    // console.log('AuthGuard#canActivateChild called', childRoute, state);    // <-- Confirm that state is being called
     return this.canActivate(childRoute, state);
   }
   canDeactivate(
@@ -52,7 +52,7 @@ export class AuthGuard implements CanActivate, CanActivateChild, CanDeactivate<u
     currentState: RouterStateSnapshot,
     nextState?: RouterStateSnapshot
   ): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    console.log('AuthGuard#canDeactivate called', component);    // <-- Confirm that state is being called
+    // console.log('AuthGuard#canDeactivate called', component);    // <-- Confirm that state is being called
     return component.canDeactivate ? component.canDeactivate() : true;
   }
   canLoad(
@@ -60,7 +60,7 @@ export class AuthGuard implements CanActivate, CanActivateChild, CanDeactivate<u
     segments: UrlSegment[]
   ): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     const url = `/${route.path}`;
-    console.log('AuthGuard#canLoad called', url);    // <-- Confirm that state is being called
+    // console.log('AuthGuard#canLoad called', url);    // <-- Confirm that state is being called
     return this.checkLogin(url);
   }
 
