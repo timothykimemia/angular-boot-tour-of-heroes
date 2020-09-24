@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {NavigationExtras, Router} from '@angular/router';
+import { NavigationExtras, Router } from '@angular/router';
 
 import { AuthService } from '../auth.service';
 
@@ -14,7 +14,9 @@ export class LoginComponent implements OnInit {
   constructor(
     public authService: AuthService,
     public router: Router
-  ) { }
+  ) {
+    this.setMessage();
+  }
 
   ngOnInit(): void {
   }

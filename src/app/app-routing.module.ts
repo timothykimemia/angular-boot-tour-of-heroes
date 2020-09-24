@@ -1,15 +1,19 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule, PreloadAllModules } from '@angular/router';
+import { Routes, RouterModule } from '@angular/router';
 
 import { AuthGuard } from './auth/auth.guard';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { CrisisMessageComponent } from './crisis/crisis-message/crisis-message.component';
 import { PageNotFoundComponent } from './dashboard/page-not-found/page-not-found.component';
+import { SelectivePreloadingStrategyService } from './selective-preloading-strategy.service';
 
 const routes: Routes = [
   { path: 'dashboard', component: DashboardComponent },
-  { path: 'compose', component: CrisisMessageComponent, outlet: 'popup' },
-
+  {
+    path: 'compose',
+    component: CrisisMessageComponent,
+    outlet: 'popup'
+  },
   {
     path: 'admin',
     loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule),
@@ -31,7 +35,7 @@ const routes: Routes = [
     routes,
     {
       enableTracing: false,   // <-- debugging purposes only
-      preloadingStrategy: PreloadAllModules
+      preloadingStrategy: SelectivePreloadingStrategyService,
     }
   )],
   exports: [RouterModule]

@@ -12,7 +12,7 @@ import { slideInAnimation } from './animation';
 export class AppComponent {
   title = 'angular-tour-of-heroes';
 
-  getAnimationData(outlet: RouterOutlet) {
+  getAnimationData(outlet: RouterOutlet): RouterOutlet {
     return outlet && outlet.activatedRouteData && outlet.activatedRouteData.animation;
   }
 }

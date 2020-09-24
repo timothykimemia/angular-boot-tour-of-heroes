@@ -17,6 +17,10 @@ import { Observable } from 'rxjs';
 
 import { AuthService } from './auth.service';
 
+export interface CanComponentDeactivate {
+  canDeactivate: () => Observable<boolean> | Promise<boolean> | boolean;
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -29,33 +33,38 @@ export class AuthGuard implements CanActivate, CanActivateChild, CanDeactivate<u
 
   canActivate(
     route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot): Observable<true | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
+    state: RouterStateSnapshot
+  ): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     const url: string = state.url;
     console.log('AuthGuard#canActivate called', url);    // <-- Confirm that state is being called
     return this.checkLogin(url);
   }
   canActivateChild(
     childRoute: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot): Observable<true | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
+    state: RouterStateSnapshot
+  ): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     console.log('AuthGuard#canActivateChild called', childRoute, state);    // <-- Confirm that state is being called
     return this.canActivate(childRoute, state);
   }
   canDeactivate(
-    component: unknown,
+    component: CanComponentDeactivate,
     currentRoute: ActivatedRouteSnapshot,
     currentState: RouterStateSnapshot,
-    nextState?: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    return true;
+    nextState?: RouterStateSnapshot
+  ): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
+    console.log('AuthGuard#canDeactivate called', component);    // <-- Confirm that state is being called
+    return component.canDeactivate ? component.canDeactivate() : true;
   }
   canLoad(
     route: Route,
-    segments: UrlSegment[]): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
+    segments: UrlSegment[]
+  ): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     const url = `/${route.path}`;
     console.log('AuthGuard#canLoad called', url);    // <-- Confirm that state is being called
     return this.checkLogin(url);
   }
 
-  checkLogin(url: string): true | UrlTree {
+  checkLogin(url: string): boolean {
     if (this.authService.isLoggedIn) { return true; }
 
     // Store the attempted URL for redirecting
@@ -71,7 +80,9 @@ export class AuthGuard implements CanActivate, CanActivateChild, CanDeactivate<u
       fragment: 'anchor'
     };
 
-    // Redirect to the login page with extras
-    return this.router.createUrlTree(['/login'], navigationExtras);
+    // Navigate to the login page with extras
+    this.router.navigate(['/login'], navigationExtras).then();
+
+    return false;
   }
 }

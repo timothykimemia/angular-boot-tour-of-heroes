@@ -11,7 +11,7 @@ export class InMemoryDataService implements InMemoryDbService {
 
   constructor() { }
 
-  createDb() {
+  createDb(): any {
     const heroes = [
       { id: 11, name: 'Dr Nice' },
       { id: 12, name: 'Narco' },
@@ -29,7 +29,8 @@ export class InMemoryDataService implements InMemoryDbService {
       { id: 1, name: 'Dragon Burning Cities' },
       { id: 2, name: 'Sky Rains Great White Sharks' },
       { id: 3, name: 'Giant Asteroid Heading For Earth' },
-      { id: 4, name: 'Procrastinators Meeting Delayed Again' }, ];
+      { id: 4, name: 'Procrastinators Meeting Delayed Again' },
+    ];
 
     return { heroes, crises };
   }
