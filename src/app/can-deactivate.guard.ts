@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import {
   CanDeactivate,
-  CanLoad,
   ActivatedRouteSnapshot,
   RouterStateSnapshot,
   UrlTree

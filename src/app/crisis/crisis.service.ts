@@ -44,7 +44,7 @@ export class CrisisService {
   }
 
   /** POST: add a new crisis to the server */
-  addCrisis(crisis: Crisis): Observable<any> {
+  addCrisis(crisis: Crisis): Observable<Crisis> {
     return this.http.post<Crisis>(this.crisisUrl, crisis, this.httpOptions).pipe(
       tap((newCrisis: Crisis) => this.log(`added crisis w/ id=${newCrisis.id}`)),
       catchError(this.handleError<Crisis>('addCrisis'))
@@ -52,7 +52,7 @@ export class CrisisService {
   }
 
   /** PUT: update the crises on the server */
-  updateCrisis(crisis: Crisis): Observable<any> {
+  updateCrisis(crisis: Crisis): Observable<Crisis> {
     return this.http.put(this.crisisUrl, crisis, this.httpOptions).pipe(
       tap(_ => this.log(`updated crisis id=${crisis.id}`)),
       catchError(this.handleError<any>('updateCrisis'))
@@ -95,6 +95,16 @@ export class CrisisService {
       }),
       catchError(this.handleError<Crisis>(`getCrisis id=${id}`))
     );
+  }
+
+  /**
+   * Ask user to confirm an action. `message` explains the action and choices.
+   * Returns observable resolving to `true`=confirm or `false`=cancel
+   */
+  confirm(message?: string): Observable<boolean> {
+    const confirmation = window.confirm(message || 'Is it OK?');
+
+    return of(confirmation);
   }
 
   /** Log a HeroService message with the MessageService */

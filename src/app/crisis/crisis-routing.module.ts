@@ -26,10 +26,10 @@ const routes: Routes = [
               crisis: CrisisDetailResolverService
             }
           },
-          {
+          /*{
             path: '',
             component: CrisisHomeComponent
-          }
+          }*/
         ]
       }
     ]

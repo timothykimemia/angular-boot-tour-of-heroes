@@ -49,7 +49,7 @@ export class HeroService {
   }
 
   /** PUT: update the hero on the server */
-  updateHero(hero: Hero): Observable<any> {
+  updateHero(hero: Hero): Observable<Hero> {
     return this.http.put(this.heroesUrl, hero, this.httpOptions).pipe(
       tap(_ => this.log(`updated hero id=${hero.id}`)),
       catchError(this.handleError<any>('updateHero'))
@@ -92,6 +92,16 @@ export class HeroService {
       }),
       catchError(this.handleError<Hero>(`getHero id=${id}`))
     );
+  }
+
+  /**
+   * Ask user to confirm an action. `message` explains the action and choices.
+   * Returns observable resolving to `true`=confirm or `false`=cancel
+   */
+  confirm(message?: string): Observable<boolean> {
+    const confirmation = window.confirm(message || 'Is it OK?');
+
+    return of(confirmation);
   }
 
   /** Log a HeroService message with the MessageService */

@@ -14,7 +14,6 @@ import { HeroService } from '../hero.service';
   styleUrls: ['./hero-detail.component.css']
 })
 export class HeroDetailComponent implements OnInit {
-  hero: Hero;
   hero$: Observable<Hero>;
 
   constructor(
@@ -38,15 +37,15 @@ export class HeroDetailComponent implements OnInit {
     this.heroService.getHero(id).subscribe(hero => this.hero = hero);*/
   }
 
-  save(): void {
-    this.heroService.updateHero(this.hero).subscribe(() => this.goBack());
+  save(hero: Hero): void {
+    this.heroService.updateHero(hero).subscribe(() => this.goToHeroes(hero));
   }
 
   goBack(): void {
     this.location.back();
   }
 
-  goToHeroes(hero: Hero): void {
+  goToHeroes(hero: Hero | null): void {
     // this.router.navigate(['/hero']);   // <-- simply just navigate back to /hero
 
     const heroId = hero ? hero.id : null;

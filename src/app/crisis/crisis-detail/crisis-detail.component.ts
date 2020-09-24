@@ -1,13 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router, ParamMap } from '@angular/router';
 import { Location } from '@angular/common';
+import { ActivatedRoute, Router, ParamMap } from '@angular/router';
 
 import { Observable } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 
 import { Crisis } from '../crisis';
 import { CrisisService } from '../crisis.service';
-import { DialogService } from '../../dialog.service';
 
 @Component({
   selector: 'app-crisis-detail',
@@ -24,7 +23,6 @@ export class CrisisDetailComponent implements OnInit {
     private location: Location,
     private route: ActivatedRoute,
     private crisisService: CrisisService,
-    public dialogService: DialogService,
   ) { }
 
   ngOnInit(): void {
@@ -32,26 +30,38 @@ export class CrisisDetailComponent implements OnInit {
   }
 
   getCrisis(): void {
-    /*this.crisis$ = this.route.paramMap.pipe(
+    this.crisis$ = this.route.paramMap.pipe(
       switchMap((params: ParamMap) =>
         this.crisisService.getCrisis(+params.get('id'))
       )
-    );*/
+    );
 
-    this.route.data
+    /*this.route.data
       .subscribe((data: { crisis: Crisis }) => {
         this.editName = data.crisis.name;
         this.crisis = data.crisis;
-      });
+      });*/
+  }
+
+  save(crisis: Crisis): void {
+    this.crisisService.updateCrisis(crisis).subscribe(() => this.goToCrises(crisis));
   }
 
   cancel(): void {
-    this.goToCrises();
+    this.goToCrises(null);
   }
 
-  save(): void {
-    this.crisis.name = this.editName;
-    this.goToCrises();
+  goBack(): void {
+    this.location.back();
+  }
+
+  goToCrises(crisis: Crisis | null): void {
+    const crisisId = crisis ? crisis.id : null;
+    // Pass along the crisis id if available
+    // so that the CrisisListComponent can select that crisis.
+    // Add a totally useless `foo` parameter for kicks.
+    // Relative navigation back to the crises
+    this.router.navigate(['../', { id: crisisId }], { relativeTo: this.route }).then();
   }
 
   canDeactivate(): Observable<boolean> | boolean {
@@ -61,20 +71,7 @@ export class CrisisDetailComponent implements OnInit {
     }
     // Otherwise ask the user with the dialog service and return its
     // observable which resolves to true or false when the user decides
-    return this.dialogService.confirm('Discard changes?');
-  }
-
-  goBack(): void {
-    this.location.back();
-  }
-
-  goToCrises(): void {
-    const crisisId = this.crisis ? this.crisis.id : null;
-    // Pass along the crisis id if available
-    // so that the CrisisListComponent can select that crisis.
-    // Add a totally useless `foo` parameter for kicks.
-    // Relative navigation back to the crises
-    this.router.navigate(['../', { id: crisisId }], { relativeTo: this.route }).then();
+    return this.crisisService.confirm('Discard changes?');
   }
 
 }

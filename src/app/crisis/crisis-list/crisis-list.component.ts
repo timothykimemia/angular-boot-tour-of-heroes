@@ -38,6 +38,7 @@ export class CrisisListComponent implements OnInit {
   add(name: string): void {
     name = name.trim();
     if (!name) { return; }
+    console.log(name, {name} as Crisis);
     this.crisisService.addCrisis({ name } as Crisis).subscribe(hero => {
       this.crises.push(hero);
     });

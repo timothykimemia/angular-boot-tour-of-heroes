@@ -30,13 +30,14 @@ export class AuthGuard implements CanActivate, CanActivateChild, CanDeactivate<u
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<true | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    console.log('AuthGuard#canActivate called');    // <-- Confirm that state is being called
     const url: string = state.url;
+    console.log('AuthGuard#canActivate called', url);    // <-- Confirm that state is being called
     return this.checkLogin(url);
   }
   canActivateChild(
     childRoute: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<true | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
+    console.log('AuthGuard#canActivateChild called', childRoute, state);    // <-- Confirm that state is being called
     return this.canActivate(childRoute, state);
   }
   canDeactivate(
@@ -49,7 +50,9 @@ export class AuthGuard implements CanActivate, CanActivateChild, CanDeactivate<u
   canLoad(
     route: Route,
     segments: UrlSegment[]): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    return true;
+    const url = `/${route.path}`;
+    console.log('AuthGuard#canLoad called', url);    // <-- Confirm that state is being called
+    return this.checkLogin(url);
   }
 
   checkLogin(url: string): true | UrlTree {
