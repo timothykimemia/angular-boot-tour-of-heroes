@@ -34,9 +34,10 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(
     routes,
     {
-      enableTracing: false,   // <-- debugging purposes only
-      preloadingStrategy: SelectivePreloadingStrategyService,
-    }
+    enableTracing: false,   // <-- debugging purposes only
+    preloadingStrategy: SelectivePreloadingStrategyService,
+    relativeLinkResolution: 'legacy'
+}
   )],
   exports: [RouterModule]
 })
